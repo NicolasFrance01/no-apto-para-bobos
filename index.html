@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/images/logo.jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAB - No Apto para Bobos</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div id="app">
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <img src="/images/logo.jpg" alt="NAB Logo" class="logo floating" />
+          <h1>NO APTO PARA BOBOS</h1>
+          <p class="subtitle">Stream Especial Comunidad</p>
+        </div>
+      </div>
+
+      <!-- Decorative Images -->
+      <img src="/images/jesus.jpg" alt="Jesus Cool" class="deco-img left-deco" />
+      <img src="/images/dog.jpg" alt="Perro Cool" class="deco-img right-deco" />
+    </header>
+
+    <!-- Form Section -->
+    <section class="form-section">
+      <div class="container">
+        <div class="form-card">
+          <h2>Regístrate</h2>
+          <p>Completa el formulario para participar del sorteo.</p>
+
+          <form id="nabForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-group">
+              <label for="name">Nombre Completo</label>
+              <input type="text" id="name" name="name" required placeholder="Tu nombre aquí" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Número de Teléfono</label>
+              <input type="tel" id="phone" name="phone" required placeholder="+54 9 11..." />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Correo Electrónico</label>
+              <input type="email" id="email" name="email" required placeholder="tu@email.com" />
+            </div>
+
+            <div class="form-group">
+              <label>¿Deseas participar en el stream de especial comunidad?</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="participate" value="si" required />
+                  <span>Sí</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="participate" value="no" />
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Conditional Fields -->
+            <div id="conditionalFields" class="hidden">
+              <div class="form-group">
+                <label>¿Tienes movilidad propia?</label>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input type="radio" name="mobility" value="bondi" />
+                    <span>Bondi / Transporte Público</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="mobility" value="auto_moto" />
+                    <span>Auto / Moto</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="info-box">
+                <p><strong>🕒 Horario:</strong> 20:00 a 22:00 hs</p>
+                <p>⚠️ Se recomienda llegar 30 minutos antes.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Mensaje (Opcional)</label>
+              <textarea id="message" name="message" rows="4" placeholder="Escribe lo que desees..."></textarea>
+            </div>
+
+            <button type="submit" class="btn">Enviar Registro</button>
+          </form>
+          <div id="status" class="status-message"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
