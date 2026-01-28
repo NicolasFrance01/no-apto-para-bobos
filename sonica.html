@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/images/logo.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonica - NAB</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            /* Prevent scrolling if we want full screen */
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="back-nav">
+        <a href="/" class="btn" style="padding: 8px 20px; font-size: 0.9rem;">Volver</a>
+    </div>
+    <div class="iframe-container">
+        <iframe src="https://embed.liveavatar.com/v1/6814d2c6-1ae4-425c-9f5a-6c84c0366478" allow="microphone"
+            title="LiveAvatar Embed"></iframe>
+    </div>
+</body>
+
+</html>
