@@ -15,23 +15,52 @@
             flex-direction: column;
             align-items: center;
             background: radial-gradient(circle at center, #2a2a2a 0%, var(--bg-color) 70%);
+            position: relative;
+            overflow: hidden;
         }
 
         .back-nav {
             width: 100%;
             max-width: 1200px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
+            z-index: 10;
         }
 
         .picker-card {
-            background: rgba(30, 30, 30, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(30, 30, 30, 0.85);
+            backdrop-filter: blur(15px);
             padding: 40px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             width: 100%;
             max-width: 800px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .deco-img-sorteo {
+            position: absolute;
+            width: 250px;
+            height: auto;
+            opacity: 0.4;
+            filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+            z-index: 1;
+            pointer-events: none;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .left-deco {
+            top: 10%;
+            left: -50px;
+            transform: rotate(-10deg);
+        }
+
+        .right-deco {
+            bottom: 10%;
+            right: -50px;
+            transform: rotate(10deg);
         }
 
         h2 {
@@ -41,11 +70,20 @@
             color: var(--primary-color);
             text-align: center;
             text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo-sorteo {
+            width: 100px;
+            margin: 0 auto 20px;
+            display: block;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
         }
 
         textarea {
             width: 100%;
-            height: 200px;
+            height: 150px;
             padding: 15px;
             background: #2a2a2a;
             border: 2px solid transparent;
@@ -59,7 +97,6 @@
         }
 
         textarea:focus {
-            outline: none;
             border-color: var(--primary-color);
             background: #333;
         }
@@ -69,7 +106,7 @@
             gap: 20px;
             align-items: center;
             justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
@@ -80,7 +117,7 @@
         }
 
         input[type="number"] {
-            width: 60px;
+            width: 70px;
             padding: 10px;
             background: #2a2a2a;
             border: 2px solid transparent;
@@ -88,75 +125,84 @@
             color: #fff;
             text-align: center;
             font-weight: bold;
-        }
-
-        input[type="number"]:focus {
-            outline: none;
-            border-color: var(--primary-color);
+            font-size: 1.1rem;
         }
 
         #results {
-            margin-top: 40px;
+            margin-top: 30px;
             width: 100%;
+            display: grid;
+            gap: 15px;
         }
 
         .winner-item {
-            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 69, 0, 0.1));
-            border: 1px solid var(--primary-color);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: #000;
+            padding: 20px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            animation: slideIn 0.5s ease-out forwards;
-            opacity: 0;
+            animation: winnerReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4);
+            transform: scale(0);
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(-20px);
-                opacity: 0;
-            }
-
+        @keyframes winnerReveal {
             to {
-                transform: translateX(0);
-                opacity: 1;
+                transform: scale(1);
             }
         }
 
         .winner-rank {
             font-weight: 900;
-            color: var(--primary-color);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
 
         .winner-name {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
         }
 
-        .confetti {
+        /* Animation overlay */
+        #animationArea {
             position: fixed;
-            width: 10px;
-            height: 10px;
-            background-color: #f0f;
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+        }
+
+        .floating-name {
+            position: absolute;
+            color: var(--primary-color);
+            font-weight: bold;
+            white-space: nowrap;
+            opacity: 0.8;
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            transition: all 0.3s linear;
         }
     </style>
 </head>
 
 <body>
     <div class="sorteos-container">
+        <img src="/images/stream_setup.png" alt="" class="deco-img-sorteo left-deco" />
+        <img src="/images/bbq.png" alt="" class="deco-img-sorteo right-deco" />
+
         <div class="back-nav">
             <a href="../index.html" class="btn" style="padding: 8px 20px; font-size: 0.9rem;">Volver</a>
         </div>
 
         <div class="picker-card">
+            <img src="/images/logo.jpg" alt="Logo" class="logo-sorteo" />
             <h2>Generador de Sorteos</h2>
-            <p style="text-align: center; color: var(--text-muted); margin-bottom: 20px;">
-                Ingresa un nombre por línea para comenzar el sorteo.
-            </p>
 
             <textarea id="namesInput" placeholder="Nombre 1&#10;Nombre 2&#10;Nombre 3..."></textarea>
 
@@ -165,18 +211,21 @@
                     <label for="winnerCount">Ganadores:</label>
                     <input type="number" id="winnerCount" value="1" min="1">
                 </div>
-                <button id="drawBtn" class="btn">¡SORTÉAR!</button>
+                <button id="drawBtn" class="btn">¡EMPEZAR SORTEO!</button>
             </div>
 
             <div id="results"></div>
         </div>
     </div>
 
+    <div id="animationArea"></div>
+
     <script>
         const drawBtn = document.getElementById('drawBtn');
         const namesInput = document.getElementById('namesInput');
         const winnerCountInput = document.getElementById('winnerCount');
         const resultsContainer = document.getElementById('results');
+        const animationArea = document.getElementById('animationArea');
 
         drawBtn.addEventListener('click', () => {
             const names = namesInput.value.split('\n')
@@ -185,50 +234,94 @@
 
             const winnerCount = parseInt(winnerCountInput.value);
 
-            if (names.length === 0) {
-                alert('Por favor, ingresa al menos un nombre.');
+            if (names.length < 2) {
+                alert('Por favor, ingresa al menos 2 nombres para realizar el sorteo.');
                 return;
             }
 
             if (winnerCount > names.length) {
-                alert('La cantidad de ganadores no puede ser mayor a la cantidad de participantes.');
+                alert('La cantidad de ganadores no puede ser mayor a los participantes.');
                 return;
             }
 
-            // Disable button during "animation"
+            startAnimation(names, winnerCount);
+        });
+
+        function startAnimation(names, winnerCount) {
             drawBtn.disabled = true;
-            drawBtn.innerText = 'Sorteando...';
             resultsContainer.innerHTML = '';
+            animationArea.style.display = 'block';
+            animationArea.innerHTML = '';
+
+            const floaters = [];
+            const count = Math.min(names.length * 2, 40);
+
+            for (let i = 0; i < count; i++) {
+                const floater = createFloater(names[Math.floor(Math.random() * names.length)]);
+                floaters.push(floater);
+            }
+
+            let duration = 3000;
+            let interval = setInterval(() => {
+                floaters.forEach(f => moveFloater(f));
+            }, 100);
 
             setTimeout(() => {
-                const winners = [];
-                const pool = [...names];
+                clearInterval(interval);
+                pickWinners(names, winnerCount);
+            }, duration);
+        }
 
-                for (let i = 0; i < winnerCount; i++) {
-                    const randomIndex = Math.floor(Math.random() * pool.length);
-                    winners.push(pool.splice(randomIndex, 1)[0]);
-                }
+        function createFloater(name) {
+            const div = document.createElement('div');
+            div.className = 'floating-name';
+            div.innerText = name;
+            resetFloater(div);
+            animationArea.appendChild(div);
+            return div;
+        }
 
-                displayWinners(winners);
-                drawBtn.disabled = false;
-                drawBtn.innerText = '¡SORTÉAR!';
-            }, 1500);
-        });
+        function resetFloater(div) {
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.top = Math.random() * 100 + 'vh';
+            div.style.transform = `scale(${0.5 + Math.random()}) rotate(${(Math.random() - 0.5) * 40}deg)`;
+            div.style.opacity = 0.3 + Math.random() * 0.5;
+        }
+
+        function moveFloater(div) {
+            div.style.left = (parseFloat(div.style.left) + (Math.random() - 0.5) * 20) + 'vw';
+            div.style.top = (parseFloat(div.style.top) + (Math.random() - 0.5) * 20) + 'vh';
+        }
+
+        function pickWinners(names, winnerCount) {
+            const winners = [];
+            const pool = [...names];
+
+            for (let i = 0; i < winnerCount; i++) {
+                const randomIndex = Math.floor(Math.random() * pool.length);
+                winners.push(pool.splice(randomIndex, 1)[0]);
+            }
+
+            animationArea.innerHTML = '';
+            animationArea.style.display = 'none';
+
+            displayWinners(winners);
+            drawBtn.disabled = false;
+        }
 
         function displayWinners(winners) {
             winners.forEach((winner, index) => {
-                const div = document.createElement('div');
-                div.className = 'winner-item';
-                div.style.animationDelay = `${index * 0.3}s`;
-                div.innerHTML = `
-                <span class="winner-rank">#${index + 1}</span>
-                <span class="winner-name">${winner}</span>
-                <span style="font-size: 1.5rem;">🏆</span>
-            `;
-                resultsContainer.appendChild(div);
+                setTimeout(() => {
+                    const div = document.createElement('div');
+                    div.className = 'winner-item';
+                    div.innerHTML = `
+                    <span class="winner-rank">#${index + 1}</span>
+                    <span class="winner-name">${winner}</span>
+                    <span style="font-size: 2rem;">👑</span>
+                `;
+                    resultsContainer.appendChild(div);
+                }, index * 800);
             });
-
-            // Simple celebration effect can be added here
         }
     </script>
 </body>
