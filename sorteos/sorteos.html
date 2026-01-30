@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/images/logo.jpg" />
+    <link rel="icon" type="image/svg+xml" href="../public/images/logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sorteos - NAB</title>
     <link rel="stylesheet" href="../style.css" />
@@ -16,7 +16,7 @@
             align-items: center;
             background: radial-gradient(circle at center, #2a2a2a 0%, var(--bg-color) 70%);
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .back-nav {
@@ -26,46 +26,81 @@
             z-index: 10;
         }
 
+        .main-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 1100px;
+            z-index: 5;
+            position: relative;
+        }
+
         .picker-card {
             background: rgba(30, 30, 30, 0.85);
             backdrop-filter: blur(15px);
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            width: 100%;
-            max-width: 800px;
-            position: relative;
-            z-index: 5;
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .side-img {
+            width: 400px;
+            height: auto;
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            transition: var(--transition);
+            display: block;
+        }
+
+        .side-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+        }
+
+        @media (max-width: 900px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .side-img {
+                width: 100%;
+                max-width: 350px;
+            }
         }
 
         .deco-img-sorteo {
             position: absolute;
             width: 250px;
             height: auto;
-            opacity: 0.4;
+            opacity: 0.3;
             filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
             z-index: 1;
             pointer-events: none;
             border-radius: 20px;
-            border: 2px solid rgba(255, 215, 0, 0.2);
+            border: 2px solid rgba(255, 215, 0, 0.1);
         }
 
         .left-deco {
-            top: 10%;
-            left: -50px;
-            transform: rotate(-10deg);
+            top: 5%;
+            left: -80px;
+            transform: rotate(-15deg);
         }
 
         .right-deco {
-            bottom: 10%;
-            right: -50px;
-            transform: rotate(10deg);
+            bottom: 5%;
+            right: -80px;
+            transform: rotate(15deg);
         }
 
         h2 {
             font-family: var(--font-heading);
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
             color: var(--primary-color);
             text-align: center;
@@ -74,25 +109,25 @@
         }
 
         .logo-sorteo {
-            width: 100px;
-            margin: 0 auto 20px;
+            width: 80px;
+            margin: 0 auto 15px;
             display: block;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
         }
 
         textarea {
             width: 100%;
             height: 150px;
-            padding: 15px;
+            padding: 12px;
             background: #2a2a2a;
             border: 2px solid transparent;
             border-radius: 10px;
             color: #fff;
             font-family: var(--font-body);
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: var(--transition);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             resize: none;
         }
 
@@ -103,7 +138,7 @@
 
         .controls {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
@@ -113,38 +148,37 @@
         .input-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         input[type="number"] {
-            width: 70px;
-            padding: 10px;
+            width: 60px;
+            padding: 8px;
             background: #2a2a2a;
             border: 2px solid transparent;
-            border-radius: 10px;
+            border-radius: 8px;
             color: #fff;
             text-align: center;
             font-weight: bold;
-            font-size: 1.1rem;
         }
 
         #results {
-            margin-top: 30px;
+            margin-top: 20px;
             width: 100%;
             display: grid;
-            gap: 15px;
+            gap: 10px;
         }
 
         .winner-item {
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             color: #000;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 15px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            animation: winnerReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4);
+            animation: winnerReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            box-shadow: 0 8px 20px rgba(255, 69, 0, 0.3);
             transform: scale(0);
         }
 
@@ -156,11 +190,11 @@
 
         .winner-rank {
             font-weight: 900;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .winner-name {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -185,7 +219,7 @@
             opacity: 0.8;
             font-family: var(--font-heading);
             text-transform: uppercase;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: all 0.3s linear;
         }
     </style>
@@ -193,28 +227,33 @@
 
 <body>
     <div class="sorteos-container">
-        <img src="/public/images/stream_setup.png" alt="" class="deco-img-sorteo left-deco" />
-        <img src="/public/images/bbq.png" alt="" class="deco-img-sorteo right-deco" />
+        <!-- Background Decos -->
+        <img src="../public/images/stream_setup.png" alt="" class="deco-img-sorteo left-deco" />
+        <img src="../public/images/bbq.png" alt="" class="deco-img-sorteo right-deco" />
 
         <div class="back-nav">
             <a href="../index.html" class="btn" style="padding: 8px 20px; font-size: 0.9rem;">Volver</a>
         </div>
 
-        <div class="picker-card">
-            <img src=/public/images/logo.jpg" alt="Logo" class="logo-sorteo" />
-            <h2>Generador de Sorteos</h2>
+        <div class="main-wrapper">
+            <div class="picker-card">
+                <img src="../public/images/logo.jpg" alt="Logo" class="logo-sorteo" />
+                <h2>Generador de Sorteos</h2>
 
-            <textarea id="namesInput" placeholder="Nombre 1&#10;Nombre 2&#10;Nombre 3..."></textarea>
+                <textarea id="namesInput" placeholder="Nombre 1&#10;Nombre 2&#10;Nombre 3..."></textarea>
 
-            <div class="controls">
-                <div class="input-group">
-                    <label for="winnerCount">Ganadores:</label>
-                    <input type="number" id="winnerCount" value="1" min="1">
+                <div class="controls">
+                    <div class="input-group">
+                        <label for="winnerCount">Ganadores:</label>
+                        <input type="number" id="winnerCount" value="1" min="1">
+                    </div>
+                    <button id="drawBtn" class="btn">¡EMPEZAR SORTEO!</button>
                 </div>
-                <button id="drawBtn" class="btn">¡EMPEZAR SORTEO!</button>
+
+                <div id="results"></div>
             </div>
 
-            <div id="results"></div>
+            <img src="../public/images/ganadorRedbull.png" alt="Ganador RedBull" class="side-img" />
         </div>
     </div>
 
@@ -289,8 +328,8 @@
         }
 
         function moveFloater(div) {
-            div.style.left = (parseFloat(div.style.left) + (Math.random() - 0.5) * 20) + 'vw';
-            div.style.top = (parseFloat(div.style.top) + (Math.random() - 0.5) * 20) + 'vh';
+            div.style.left = (parseFloat(div.style.left) + (Math.random() - 0.5) * 30) + 'vw';
+            div.style.top = (parseFloat(div.style.top) + (Math.random() - 0.5) * 30) + 'vh';
         }
 
         function pickWinners(names, winnerCount) {
@@ -317,10 +356,10 @@
                     div.innerHTML = `
                     <span class="winner-rank">#${index + 1}</span>
                     <span class="winner-name">${winner}</span>
-                    <span style="font-size: 2rem;">👑</span>
+                    <span style="font-size: 1.5rem;">👑</span>
                 `;
                     resultsContainer.appendChild(div);
-                }, index * 800);
+                }, index * 600);
             });
         }
     </script>
