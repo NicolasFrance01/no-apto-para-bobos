@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/images/logo.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorteos - NAB</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+        .sorteos-container {
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: radial-gradient(circle at center, #2a2a2a 0%, var(--bg-color) 70%);
+        }
+
+        .back-nav {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 40px;
+        }
+
+        .picker-card {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            background: #2a2a2a;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+            margin-bottom: 20px;
+            resize: none;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: #333;
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 10px;
+            background: #2a2a2a;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        #results {
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .winner-item {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 69, 0, 0.1));
+            border: 1px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .winner-rank {
+            font-weight: 900;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .winner-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sorteos-container">
+        <div class="back-nav">
+            <a href="../index.html" class="btn" style="padding: 8px 20px; font-size: 0.9rem;">Volver</a>
+        </div>
+
+        <div class="picker-card">
+            <h2>Generador de Sorteos</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 20px;">
+                Ingresa un nombre por línea para comenzar el sorteo.
+            </p>
+
+            <textarea id="namesInput" placeholder="Nombre 1&#10;Nombre 2&#10;Nombre 3..."></textarea>
+
+            <div class="controls">
+                <div class="input-group">
+                    <label for="winnerCount">Ganadores:</label>
+                    <input type="number" id="winnerCount" value="1" min="1">
+                </div>
+                <button id="drawBtn" class="btn">¡SORTÉAR!</button>
+            </div>
+
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        const drawBtn = document.getElementById('drawBtn');
+        const namesInput = document.getElementById('namesInput');
+        const winnerCountInput = document.getElementById('winnerCount');
+        const resultsContainer = document.getElementById('results');
+
+        drawBtn.addEventListener('click', () => {
+            const names = namesInput.value.split('\n')
+                .map(n => n.trim())
+                .filter(n => n !== '');
+
+            const winnerCount = parseInt(winnerCountInput.value);
+
+            if (names.length === 0) {
+                alert('Por favor, ingresa al menos un nombre.');
+                return;
+            }
+
+            if (winnerCount > names.length) {
+                alert('La cantidad de ganadores no puede ser mayor a la cantidad de participantes.');
+                return;
+            }
+
+            // Disable button during "animation"
+            drawBtn.disabled = true;
+            drawBtn.innerText = 'Sorteando...';
+            resultsContainer.innerHTML = '';
+
+            setTimeout(() => {
+                const winners = [];
+                const pool = [...names];
+
+                for (let i = 0; i < winnerCount; i++) {
+                    const randomIndex = Math.floor(Math.random() * pool.length);
+                    winners.push(pool.splice(randomIndex, 1)[0]);
+                }
+
+                displayWinners(winners);
+                drawBtn.disabled = false;
+                drawBtn.innerText = '¡SORTÉAR!';
+            }, 1500);
+        });
+
+        function displayWinners(winners) {
+            winners.forEach((winner, index) => {
+                const div = document.createElement('div');
+                div.className = 'winner-item';
+                div.style.animationDelay = `${index * 0.3}s`;
+                div.innerHTML = `
+                <span class="winner-rank">#${index + 1}</span>
+                <span class="winner-name">${winner}</span>
+                <span style="font-size: 1.5rem;">🏆</span>
+            `;
+                resultsContainer.appendChild(div);
+            });
+
+            // Simple celebration effect can be added here
+        }
+    </script>
+</body>
+
+</html>
