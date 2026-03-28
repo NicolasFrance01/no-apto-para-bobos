@@ -376,6 +376,7 @@
                     </div>
                     <button type="submit" class="btn">Confirmar Asistencia</button>
                 </form>
+                <div id="status" class="status-message" style="margin-top: 20px; padding: 15px; border-radius: 12px; display: none; text-align: center; font-weight: bold;"></div>
             </section>
 
             <div class="hero-image">
@@ -397,6 +398,50 @@
         </aside>
     </div>
 
+    <script>
+        const form = document.getElementById("attendanceForm");
+        const status = document.getElementById("status");
+
+        form.addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+            
+            status.style.display = "block";
+            status.style.backgroundColor = "rgba(0, 210, 255, 0.1)";
+            status.style.color = "var(--primary)";
+            status.style.border = "1px solid var(--primary)";
+            status.innerText = "Enviando...";
+
+            fetch(event.target.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    status.style.backgroundColor = "rgba(146, 254, 157, 0.1)";
+                    status.style.color = "var(--secondary)";
+                    status.style.border = "1px solid var(--secondary)";
+                    status.innerText = "¡Asistencia enviada! Pronto te contactaremos.";
+                    form.reset();
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            status.innerText = data["errors"].map(error => error["message"]).join(", ");
+                        } else {
+                            status.innerText = "Oops! Hubo un problema al enviar el formulario.";
+                        }
+                    })
+                }
+            }).catch(error => {
+                status.style.backgroundColor = "rgba(255, 0, 200, 0.1)";
+                status.style.color = "var(--accent)";
+                status.style.border = "1px solid var(--accent)";
+                status.innerText = "Oops! Hubo un problema al enviar el formulario.";
+            });
+        });
+    </script>
 </body>
 
 </html>
