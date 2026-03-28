@@ -8,6 +8,7 @@ export default defineConfig({
             input: {
                 main: resolve('index.html'),
                 sonica: resolve('sonica.html'),
+                artemis: resolve('artemis.html'),
                 sorteos: resolve('sorteos/sorteos.html'),
             },
         },
