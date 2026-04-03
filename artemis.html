@@ -103,58 +103,79 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
         .logo-small {
-            width: 80px;
+            width: 70px;
             height: auto;
-            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.3));
+            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4));
+            transition: transform 0.3s ease;
+        }
+
+        .logo-small:hover {
+            transform: scale(1.1);
         }
 
         .logo-main {
-            width: 150px;
+            width: 160px;
             height: auto;
-            border-radius: 10%;
-            box-shadow: 0 0 20px var(--primary);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-main:hover {
+            transform: scale(1.05);
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            font-weight: 900;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            letter-spacing: 1px;
         }
 
         .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
         }
 
-        .btn {
-            background: rgba(255, 255, 255, 0.05);
+        .btn-nav {
+            background: var(--glass);
             color: var(--text);
             border: 1px solid var(--glass-border);
-            padding: 10px 20px;
+            padding: 12px 28px;
             border-radius: 50px;
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
-        .btn:hover {
-            background: var(--primary);
+        .btn-nav:hover {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: #050a14;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.4);
+            border-color: transparent;
         }
 
         .video-container {
@@ -316,13 +337,13 @@
                 <div class="header-branding">
                     <img src="./public/images/artemis_logo.png" alt="Artemis II Logo" class="logo-small">
                     <img src="./public/images/logo.jpg" alt="NAB Logo" class="logo-main">
-                    <img src="./public/images/nasa_logo.png" alt="NASA Logo" class="logo-small">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" alt="NASA Logo" class="logo-small">
                 </div>
                 <h1>Misión Artemis II</h1>
                 <p>Ver en vivo el Artemis II</p>
                 <div class="nav-buttons">
-                    <a href="sonica.html" class="btn">Sonica</a>
-                    <a href="sorteos/sorteos.html" class="btn">Sorteos</a>
+                    <a href="sonica.html" class="btn-nav">Sonica</a>
+                    <a href="sorteos/sorteos.html" class="btn-nav">Sorteos</a>
                 </div>
             </header>
 
