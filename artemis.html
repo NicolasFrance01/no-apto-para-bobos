@@ -206,71 +206,31 @@
             margin-bottom: 5px;
         }
 
-        .form-container {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
             border-radius: 24px;
-            padding: 40px;
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            background: #000;
         }
 
-        .form-container h2 {
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-section-secondary h3 {
             margin-bottom: 20px;
-            color: var(--primary);
-        }
-
-        form {
-            display: grid;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        label {
-            font-weight: 600;
-            font-size: 0.9rem;
             color: var(--secondary);
-        }
-
-        input,
-        textarea {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            padding: 12px 16px;
-            border-radius: 12px;
-            color: white;
-            font-family: inherit;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .btn {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: #050a14;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-transform: uppercase;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
+            text-align: center;
+            font-size: 1.5rem;
         }
 
         .important-note {
@@ -306,8 +266,23 @@
             <header>
                 <img src="./public/images/logo.jpg" alt="NAB Logo" class="logo">
                 <h1>Misión Artemis II</h1>
-                <p>Evento Especial: Confirmación de Asistencia</p>
+                <p>Ver en vivo el Artemis II</p>
             </header>
+
+            <div class="video-section">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/m3kR2KK8TEs?autoplay=1&mute=1&rel=0" 
+                            title="NASA Live" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                
+                <div class="video-section-secondary">
+                    <h3>Lo que se vivió en NAB</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/P0iH9LeP3VY?start=753&autoplay=1&mute=1&rel=0" 
+                                title="NAB Event" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
 
             <div class="countdown-container">
                 <h3>Cuenta Regresiva</h3>
@@ -324,8 +299,7 @@
 
             <section class="info-card">
                 <h2>Detalles del Evento</h2>
-                <p>Te invitamos a ser parte de este momento histórico. No solo veremos el lanzamiento, sino que
-                    compartiremos una tarde increíble.</p>
+                <p>Revive o sigue en vivo este momento histórico. Compartimos una tarde increíble con la comunidad.</p>
 
                 <div class="event-details">
                     <div class="detail-item">
@@ -353,32 +327,6 @@
                 </div>
             </section>
 
-            <section class="form-container">
-                <h2>Confirma tu Asistencia</h2>
-                <p>Completa tus datos para enviarte la ubicación exacta.</p>
-                <br>
-                <form id="attendanceForm" action="https://formspree.io/f/mjgravjb" method="POST">
-                    <div class="form-group">
-                        <label for="name">Nombre Completo</label>
-                        <input type="text" id="name" name="name" required placeholder="Tu nombre">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Teléfono / WhatsApp</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="+54 9 11...">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="tu@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="guests">¿Vienes con alguien?</label>
-                        <input type="number" id="guests" name="guests" min="0" placeholder="0">
-                    </div>
-                    <button type="submit" class="btn">Confirmar Asistencia</button>
-                </form>
-                <div id="status" class="status-message" style="margin-top: 20px; padding: 15px; border-radius: 12px; display: none; text-align: center; font-weight: bold;"></div>
-            </section>
-
             <div class="hero-image">
                 <img src="./public/images/nasa 3.jpeg" alt="Artemis II Main Image">
                 <div class="hero-overlay">
@@ -397,51 +345,6 @@
             <img src="./public/images/nasa 2.jpeg" alt="NASA Image 2">
         </aside>
     </div>
-
-    <script>
-        const form = document.getElementById("attendanceForm");
-        const status = document.getElementById("status");
-
-        form.addEventListener("submit", async function(event) {
-            event.preventDefault();
-            const data = new FormData(event.target);
-            
-            status.style.display = "block";
-            status.style.backgroundColor = "rgba(0, 210, 255, 0.1)";
-            status.style.color = "var(--primary)";
-            status.style.border = "1px solid var(--primary)";
-            status.innerText = "Enviando...";
-
-            fetch(event.target.action, {
-                method: form.method,
-                body: data,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    status.style.backgroundColor = "rgba(146, 254, 157, 0.1)";
-                    status.style.color = "var(--secondary)";
-                    status.style.border = "1px solid var(--secondary)";
-                    status.innerText = "¡Asistencia enviada! Pronto te contactaremos.";
-                    form.reset();
-                } else {
-                    response.json().then(data => {
-                        if (Object.hasOwn(data, 'errors')) {
-                            status.innerText = data["errors"].map(error => error["message"]).join(", ");
-                        } else {
-                            status.innerText = "Oops! Hubo un problema al enviar el formulario.";
-                        }
-                    })
-                }
-            }).catch(error => {
-                status.style.backgroundColor = "rgba(255, 0, 200, 0.1)";
-                status.style.color = "var(--accent)";
-                status.style.border = "1px solid var(--accent)";
-                status.innerText = "Oops! Hubo un problema al enviar el formulario.";
-            });
-        });
-    </script>
 </body>
 
 </html>
